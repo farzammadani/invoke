@@ -18,7 +18,7 @@ class Jobs
     /**
      * @param Job[] $jobs
      */
-    public static function new(array $jobs): self
+    public static function new(array $jobs = []): self
     {
         return new self(
             jobs: $jobs
