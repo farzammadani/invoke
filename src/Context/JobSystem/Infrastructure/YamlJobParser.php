@@ -13,15 +13,14 @@ class YamlJobParser
     public function parse(): Jobs
     {
         // set empty list of jobs
-        $jobs = Jobs::new(jobs: []);
+        $jobs = [];
         // create instance of finder
         $finder = new Finder();
         // finder -> files -> in  pass folder address  -> name *.yaml
         $finder->files()->in(CronJobsFolderAddressProvider::value())->name('*.yaml');
-
         // for each finder (will actually host a list now) as file:
         foreach ($finder as $file) {
-            // data =   yaml parsefile  pass in file->getRealPath()
+            // data = yaml parsefile  pass in file->getRealPath()
             $fileData = Yaml::parseFile($file->getRealPath());
             // see if it is enabled. if not enabled (continue)...
             if(!self::jobIsActive($fileData))
@@ -29,23 +28,24 @@ class YamlJobParser
                 continue;
             }
 
+            // Create Job object out of it and add to Jobs[]
             $jobs[] = Job::new(
                 jobName: $fileData['name'],
                 jobSchedule: $fileData['schedule'],
                 jobMethod: $fileData['method'],
                 jobHeaders: $fileData['headers'] ?? [],
                 jobPayload: $fileData['payload'] ?? [],
-                jobActiveState: $fileData['enabled'] === 'true'
+                jobActiveState: $fileData['enabled']
             );
-
         }
-        // Create Job object out of it and add to Jobs[]
+
+        $jobs = Jobs::new(jobs: $jobs);
         return $jobs;
     }
 
     private static function jobIsActive(array $fileData): bool
     {
-        return $fileData['enabled'] === 'true';
+        return $fileData['enabled'] === true;
     }
 
 }

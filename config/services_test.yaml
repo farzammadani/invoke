@@ -1,0 +1,3 @@
+services:
+  App\Context\JobSystem\Infrastructure\YamlJobParser:
+    public: true
