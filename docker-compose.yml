@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  app:
+    image: php:8.2-cli
+    container_name: invoke_app
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    command: tail -f /dev/null
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    container_name: invoke_db
+    environment:
+      POSTGRES_USER: symfony
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: invoke
+    ports:
+      - "5432:5432"

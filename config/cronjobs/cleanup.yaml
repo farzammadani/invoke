@@ -1,0 +1,9 @@
+name: "Cleanup Logs"
+schedule: "0 2 * * *"
+url: "https://api.example.com/cleanup"
+method: POST
+payload:
+  keep_days: 30
+headers:
+  Authorization: "Bearer xyz"
+enabled: true
