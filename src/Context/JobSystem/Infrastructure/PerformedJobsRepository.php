@@ -6,6 +6,7 @@ use App\Context\JobSystem\Domain\Job;
 use App\Context\JobSystem\Domain\PerformedJobResult;
 use App\Context\JobSystem\Domain\PerformedJobsRepositoryInterface;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\ParameterType;
 
 class PerformedJobsRepository implements PerformedJobsRepositoryInterface
 {
@@ -44,13 +45,24 @@ class PerformedJobsRepository implements PerformedJobsRepositoryInterface
 //            'message'     => $result->jobResultMessage->value,
 //        ]);
 
-        $this->connection->insert('performed_jobs', [
-            'job_name'    => $result->jobName->value,
-            'ran_at'      => $now->format('Y-m-d H:i:s'),
-            'status_code' => $result->jobStatusCode?->value ?? 0, // fallback to 0 or -1 if null
-            'duration_ms' => $result->jobDuration->value,
-            'success'     => $result->jobSuccessState?->value === true,
-            'message'     => $result->jobResultMessage->value,
-        ]);
+        $this->connection->insert(
+            'performed_jobs',
+            [
+                'job_name'    => $result->jobName->value,
+                'ran_at'      => $now->format('Y-m-d H:i:s'),
+                'status_code' => $result->jobStatusCode?->value ?? 0,
+                'duration_ms' => $result->jobDuration->value,
+                'success'     => $result->jobSuccessState?->value === true,
+                'message'     => $result->jobResultMessage->value,
+            ],
+            [
+                'job_name'    => ParameterType::STRING,
+                'ran_at'      => ParameterType::STRING,
+                'status_code' => ParameterType::INTEGER,
+                'duration_ms' => ParameterType::INTEGER,
+                'success'     => ParameterType::BOOLEAN,
+                'message'     => ParameterType::STRING,
+            ]
+        );
     }
 }

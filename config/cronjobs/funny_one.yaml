@@ -1,6 +1,6 @@
 name: "Funny One"
-schedule: "06 10 * * *"
-url: "https://localhost.com:9999"
+schedule: "51 10 * * *"
+url: "http://localhost:9999"
 method: POST
 payload:
   keep_days: 30
