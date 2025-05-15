@@ -11,19 +11,25 @@ class YamlJobParserTest extends IntegrationTestCase
 
     public function testItParsesYaml()
     {
-        /**
-         * @var YamlJobParser $yamlParser
-         */
+        /** @var YamlJobParser $yamlParser */
         $yamlParser = $this->tester->grabService(YamlJobParser::class);
         $parseResult = $yamlParser->parse();
-        /**
-         * @var Job[] $jobs
-         */
+
+        /** @var Job[] $jobs */
         $jobs = $parseResult->jobs;
-        $firstJob = $jobs[0];
-        $this->assertEquals($firstJob->name->value, 'Notify');
-        $this->assertEquals($firstJob->schedule->value, '0 2 * * *');
-        $this->assertEquals($firstJob->jobUrl->value, 'https://api.example.com/cleanup');
-        $this->assertEquals($firstJob->enabled->value, true);
+
+        $notifyJob = null;
+
+        foreach ($jobs as $job) {
+            if ($job->name->value === 'Notify') {
+                $notifyJob = $job;
+                break;
+            }
+        }
+
+        $this->assertNotNull($notifyJob, 'Expected to find a job named "Notify".');
+        $this->assertEquals('0 2 * * *', $notifyJob->schedule->value);
+        $this->assertEquals('https://api.example.com/cleanup', $notifyJob->jobUrl->value);
+        $this->assertTrue($notifyJob->enabled->value);
     }
 }
