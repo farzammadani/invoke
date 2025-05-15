@@ -10,6 +10,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class YamlJobParser
 {
+    // TODO: Support environment variable substitution using references in the YAML file (e.g., for credentials, tokens).
     public function parse(): Jobs
     {
         // set empty list of jobs
