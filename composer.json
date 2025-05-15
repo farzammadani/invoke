@@ -32,7 +32,8 @@
     "autoload": {
         "psr-4": {
             "App\\": "src/",
-            "App\\DevTool\\": "tools/commands/"
+            "App\\DevTool\\": "tools/commands/",
+            "CronValueProviders\\": "config/cron_value_providers/"
         }
     },
     "autoload-dev": {

@@ -15,6 +15,7 @@ build:
 .PHONY: test-integration
 test-integration:
 	# usage: make test-integration GROUP=kiwi
+	#APP_ENV=test vendor/bin/codecept run integration
 	vendor/bin/codecept run integration $(if $(GROUP),--group $(GROUP))
 	# adjust later to use docker
 	#	$(DOCKER_EXEC) vendor/bin/codecept run integration $(if $(GROUP),--group $(GROUP))

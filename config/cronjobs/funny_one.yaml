@@ -1,9 +1,11 @@
 name: "Funny One"
-schedule: "02 11 * * *"
+schedule: "50 11 * * *"
 url: "http://localhost:9999"
 method: POST
 payload:
   keep_days: 30
 headers:
-  Authorization: "Bearer xyz"
+  Authorization:
+    env:
+      valueFrom: "CronValueProviders\\ApiEndpointTokenProvider"
 enabled: true

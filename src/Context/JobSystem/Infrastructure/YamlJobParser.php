@@ -29,6 +29,7 @@ class YamlJobParser
                 continue;
             }
 
+            $fileData = CronjobEnvPlaceholderSubstitutor::substitute(fileData: $fileData);
             // Create Job object out of it and add to Jobs[]
             $jobs[] = Job::new(
                 jobName: $fileData['name'],
