@@ -1,7 +1,23 @@
 services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
   App\Context\JobSystem\Infrastructure\YamlJobParser:
     public: true
 
   App\Context\JobSystem\Infrastructure\DueTimeEvaluator:
     public: true
 
+  # In-memory cronjob folder path for test fixtures
+  App\Context\Provider\CronJobsFolderAddressProviderInterface:
+    class: App\Context\Provider\InMemoryCronJobsFolderAddressProvider
+
+  # Fake env var provider for test-only tokens
+  App\Context\Provider\InMemoryCronJobEnvProvider:
+    tags: ['cronjob.env_provider']
+    public: true
+
+  CronValueProviders\ApiEndpointTokenProvider:
+    class: App\Context\Provider\InMemoryCronJobEnvProvider

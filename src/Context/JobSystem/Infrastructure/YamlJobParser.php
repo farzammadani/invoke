@@ -4,14 +4,15 @@ namespace App\Context\JobSystem\Infrastructure;
 
 use App\Context\JobSystem\Domain\Job;
 use App\Context\JobSystem\Domain\Jobs;
-use App\Context\Provider\CronJobsFolderAddressProvider;
+use App\Context\Provider\CronJobsFolderAddressProviderInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Yaml;
 
 final class YamlJobParser
 {
     public function __construct(
-        private readonly CronjobEnvPlaceholderSubstitutor $substitutor
+        private readonly CronjobEnvPlaceholderSubstitutor $substitutor,
+        private readonly CronJobsFolderAddressProviderInterface $cronJobsFolderAddressProvider
     ) {}
 
     /**
@@ -28,7 +29,7 @@ final class YamlJobParser
         // Use Symfony Finder to locate all YAML files in the cron job folder
         $finder = new Finder();
         $finder->files()
-            ->in(CronJobsFolderAddressProvider::value())
+            ->in($this->cronJobsFolderAddressProvider->value())
             ->name('*.yaml');
 
         // Process each YAML file

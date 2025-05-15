@@ -1,9 +1,7 @@
-name: "Funny One"
-schedule: "15 18 * * *"
-url: "http://localhost:9999"
+name: "Notify"
+schedule: "0 2 * * *"
+url: "https://api.example.com/cleanup"
 method: POST
-payload:
-  keep_days: 30
 headers:
   Authorization:
     env:

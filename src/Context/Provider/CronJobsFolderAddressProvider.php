@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Context\Provider;
 
-class CronJobsFolderAddressProvider
+class CronJobsFolderAddressProvider implements CronJobsFolderAddressProviderInterface
 {
-    public static function value(): string
+    public function value(): string
     {
         return realpath(__DIR__ . '../../../..') . 'config/cronjobs';
     }

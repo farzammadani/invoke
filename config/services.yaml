@@ -24,6 +24,9 @@ services:
         arguments:
             $providers: !tagged_iterator cronjob.env_provider
 
+    App\Context\Provider\CronJobsFolderAddressProviderInterface:
+        class: App\Context\Provider\CronJobsFolderAddressProvider
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
