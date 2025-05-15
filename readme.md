@@ -72,7 +72,7 @@ make doctrine-migrate
 ### 4. Run scheduled jobs manually
 
 ```bash
-php bin/console job:perform-due
+php bin/console app:perform-due
 ```
 
 ---
@@ -82,13 +82,13 @@ php bin/console job:perform-due
 Add a cron container in `docker-compose.yml` that runs:
 
 ```bash
-php bin/console job:perform-due
+php bin/console app:perform-due
 ```
 
 Or use host cron to call it into the container:
 
 ```bash
-* * * * * docker exec invoke_app php /var/www/bin/console job:perform-due
+* * * * * docker exec invoke_app php /var/www/bin/console app:perform-due
 ```
 
 ---
