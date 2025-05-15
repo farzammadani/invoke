@@ -22,7 +22,7 @@ test-integration:
 # stub server for Job Runner (testing only)
 .PHONY: stub-server
 stub-server:
-	php -S localhost:9999 -t tests/stubs tests/stubs/server.php
+	php -S localhost:9999 -t tests/tests/stubs tests/tests/stubs/server.php
 
 # Run Symfony console inside container
 .PHONY: console

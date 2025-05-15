@@ -7,7 +7,7 @@ class PerformedJobResult
     private function __construct(
         public readonly JobName $jobName,
         public readonly JobSuccessState $jobSuccessState,
-        public readonly JobStatusCode $jobStatusCode,
+        public readonly ?JobStatusCode $jobStatusCode,
         public readonly JobDuration $jobDuration,
         public readonly JobResultMessage $jobResultMessage
     )

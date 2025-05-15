@@ -6,5 +6,5 @@ interface PerformedJobsRepositoryInterface
 {
     public function hasRunInLastMinute(Job $job, \DateTimeImmutable $now): bool;
 
-    public function record(PerformedJobResult $result, \DateTimeImmutable $now): void;
+    public function save(PerformedJobResult $result, \DateTimeImmutable $now): void;
 }
