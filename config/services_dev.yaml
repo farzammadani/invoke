@@ -1,0 +1,5 @@
+services:
+  App\DevTool\RunJobCommand:
+    arguments:
+      $jobRunner: '@App\Context\JobSystem\Infrastructure\JobRunner'
+    tags: [ 'console.command' ]
