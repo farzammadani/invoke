@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\tests\integration;
+namespace App\Tests\tests\integration\JobSystem\Infrastructure;
 
 use App\Context\JobSystem\Domain\Job;
 use App\Context\JobSystem\Infrastructure\YamlJobParser;
@@ -23,6 +23,7 @@ class YamlJobParserTest extends IntegrationTestCase
         $firstJob = $jobs[0];
         $this->assertEquals($firstJob->name->value, 'Notify');
         $this->assertEquals($firstJob->schedule->value, '0 2 * * *');
+        $this->assertEquals($firstJob->jobUrl->value, 'https://api.example.com/cleanup');
         $this->assertEquals($firstJob->enabled->value, true);
     }
 }

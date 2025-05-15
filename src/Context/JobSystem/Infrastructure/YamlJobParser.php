@@ -32,6 +32,7 @@ class YamlJobParser
             $jobs[] = Job::new(
                 jobName: $fileData['name'],
                 jobSchedule: $fileData['schedule'],
+                jobUrl: $fileData['url'],
                 jobMethod: $fileData['method'],
                 jobHeaders: $fileData['headers'] ?? [],
                 jobPayload: $fileData['payload'] ?? [],

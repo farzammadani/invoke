@@ -9,6 +9,7 @@ class Job
     private function __construct(
         public readonly JobName $name,
         public readonly JobSchedule $schedule,
+        public readonly JobUrl $jobUrl,
         public readonly JobMethod $method,
         public readonly JobHeaders $headers,
         public readonly JobPayload $payload,
@@ -18,11 +19,12 @@ class Job
     }
 
 
-    public static function new(string $jobName, string $jobSchedule, string $jobMethod, array $jobHeaders = [], array $jobPayload = [], bool $jobActiveState = true): self
+    public static function new(string $jobName, string $jobSchedule, string $jobUrl, string $jobMethod, array $jobHeaders = [], array $jobPayload = [], bool $jobActiveState = true): self
     {
         return new self(
             name: JobName::new($jobName),
             schedule: JobSchedule::new($jobSchedule),
+            jobUrl: JobUrl::new($jobUrl),
             method: JobMethod::new($jobMethod),
             headers: JobHeaders::new($jobHeaders),
             payload: JobPayload::new($jobPayload),
