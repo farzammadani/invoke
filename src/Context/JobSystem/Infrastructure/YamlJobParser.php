@@ -8,29 +8,43 @@ use App\Context\Provider\CronJobsFolderAddressProvider;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Yaml;
 
-class YamlJobParser
+final class YamlJobParser
 {
-    // TODO: Support environment variable substitution using references in the YAML file (e.g., for credentials, tokens).
+    public function __construct(
+        private readonly CronjobEnvPlaceholderSubstitutor $substitutor
+    ) {}
+
+    /**
+     * Parses all YAML files found in the cron job folder and converts them into Job objects.
+     * Environment placeholders (e.g., tokens, secrets) are resolved via the CronjobEnvPlaceholderSubstitutor.
+     *
+     * @return Jobs Parsed list of active jobs.
+     */
     public function parse(): Jobs
     {
-        // set empty list of jobs
+        // Initialize an empty list of jobs
         $jobs = [];
-        // create instance of finder
+
+        // Use Symfony Finder to locate all YAML files in the cron job folder
         $finder = new Finder();
-        // finder -> files -> in  pass folder address  -> name *.yaml
-        $finder->files()->in(CronJobsFolderAddressProvider::value())->name('*.yaml');
-        // for each finder (will actually host a list now) as file:
+        $finder->files()
+            ->in(CronJobsFolderAddressProvider::value())
+            ->name('*.yaml');
+
+        // Process each YAML file
         foreach ($finder as $file) {
-            // data = yaml parsefile  pass in file->getRealPath()
+            // Parse the file into an associative array
             $fileData = Yaml::parseFile($file->getRealPath());
-            // see if it is enabled. if not enabled (continue)...
-            if(!self::jobIsActive($fileData))
-            {
+
+            // Skip the job if it's not explicitly enabled
+            if (!self::jobIsActive($fileData)) {
                 continue;
             }
 
-            $fileData = CronjobEnvPlaceholderSubstitutor::substitute(fileData: $fileData);
-            // Create Job object out of it and add to Jobs[]
+            // Recursively replace any environment references (valueFrom)
+            $fileData = $this->substitutor->substitute($fileData);
+
+            // Create a Job object from the parsed data and add it to the list
             $jobs[] = Job::new(
                 jobName: $fileData['name'],
                 jobSchedule: $fileData['schedule'],
@@ -42,13 +56,18 @@ class YamlJobParser
             );
         }
 
-        $jobs = Jobs::new(jobs: $jobs);
-        return $jobs;
+        // Wrap and return all created Job objects in a Jobs value object
+        return Jobs::new(jobs: $jobs);
     }
 
+    /**
+     * Checks if the job is marked as enabled.
+     *
+     * @param array $fileData Parsed YAML file content
+     * @return bool True if the job is enabled
+     */
     private static function jobIsActive(array $fileData): bool
     {
         return $fileData['enabled'] === true;
     }
-
 }

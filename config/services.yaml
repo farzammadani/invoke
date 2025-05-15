@@ -20,5 +20,12 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\Context\JobSystem\Infrastructure\CronjobEnvProviderRegistry:
+        arguments:
+            $providers: !tagged_iterator cronjob.env_provider
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+imports:
+    - { resource: cron_env_mappings.yaml }

@@ -2,16 +2,19 @@
 
 namespace CronValueProviders;
 
-final class ApiEndpointTokenProvider
+use App\Context\Provider\CronjobEnvValueProviderInterface;
+
+final class ApiEndpointTokenProvider implements CronjobEnvValueProviderInterface
 {
-    public static function value(): string
+    public function __construct(private string $token) {}
+
+    public function value(): string
     {
-        $token = $_ENV['API_ENDPOINT_TOKEN'] ?? getenv('API_ENDPOINT_TOKEN');
+        return 'Bearer ' . $this->token;
+    }
 
-        if (!$token) {
-            throw new \RuntimeException('Missing required environment variable: API_ENDPOINT_TOKEN');
-        }
-
-        return 'Bearer ' . $token;
+    public static function key(): string
+    {
+        return 'API_ENDPOINT_TOKEN';
     }
 }

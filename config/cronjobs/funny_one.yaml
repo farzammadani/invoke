@@ -1,5 +1,5 @@
 name: "Funny One"
-schedule: "50 11 * * *"
+schedule: "58 17 * * *"
 url: "http://localhost:9999"
 method: POST
 payload:
@@ -7,5 +7,5 @@ payload:
 headers:
   Authorization:
     env:
-      valueFrom: "CronValueProviders\\ApiEndpointTokenProvider"
+      valueFrom: "API_ENDPOINT_TOKEN"
 enabled: true

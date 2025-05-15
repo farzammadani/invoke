@@ -1,0 +1,9 @@
+# This file defines all environment variable providers used in cronjob YAMLs
+# Each service must:
+#   - Implement CronjobEnvValueProviderInterface
+#   - Have a static key() method returning the name used in `valueFrom: "..."`
+services:
+  CronValueProviders\ApiEndpointTokenProvider:
+    arguments:
+      $token: '%env(resolve:API_ENDPOINT_TOKEN)%'
+    tags: ['cronjob.env_provider']
