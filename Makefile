@@ -5,17 +5,19 @@ up:
 	docker compose up -d
 
 .PHONY: down
-up:
+down:
 	docker compose down
 
 .PHONY: build
-up:
+build:
 	docker compose build
 
 .PHONY: test-integration
 test-integration:
 	# usage: make test-integration GROUP=kiwi
-	$(DOCKER_EXEC) vendor/bin/codecept run integration $(if $(GROUP),--group $(GROUP))
+	vendor/bin/codecept run integration $(if $(GROUP),--group $(GROUP))
+	# adjust later to use docker
+	#	$(DOCKER_EXEC) vendor/bin/codecept run integration $(if $(GROUP),--group $(GROUP))
 
 # stub server for Job Runner (testing only)
 .PHONY: stub-server

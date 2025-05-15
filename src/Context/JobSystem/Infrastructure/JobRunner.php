@@ -3,7 +3,7 @@
 namespace App\Context\JobSystem\Infrastructure;
 
 use App\Context\JobSystem\Domain\Job;
-use App\Context\JobSystem\Domain\JobRunResult;
+use App\Context\JobSystem\Domain\PerformedJobResult;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class JobRunner
@@ -14,7 +14,7 @@ class JobRunner
     {
     }
 
-    public function run(Job $job): JobRunResult
+    public function run(Job $job): PerformedJobResult
     {
         $start = microtime(true);
 
@@ -33,7 +33,7 @@ class JobRunner
             $content = $response->getContent(false); // don't throw on HTTP error codes
 
         } catch (\Throwable $e) {
-            return JobRunResult::new(
+            return PerformedJobResult::new(
                 jobName: $job->name->value,
                 jobSuccessState: false,
                 jobStatusCode: null,
@@ -42,7 +42,7 @@ class JobRunner
             );
         }
 
-        return JobRunResult::new(
+        return PerformedJobResult::new(
             jobName: $job->name->value,
             jobSuccessState: self::getSuccessState($statusCode),
             jobStatusCode: $statusCode,

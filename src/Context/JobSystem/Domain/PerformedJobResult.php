@@ -2,7 +2,7 @@
 
 namespace App\Context\JobSystem\Domain;
 
-class JobRunResult
+class PerformedJobResult
 {
     private function __construct(
         public readonly JobName $jobName,
