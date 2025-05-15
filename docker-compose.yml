@@ -2,7 +2,9 @@ version: '3.8'
 
 services:
   app:
-    image: php:8.2-cli
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: invoke_app
     working_dir: /var/www
     volumes:
@@ -11,12 +13,23 @@ services:
     depends_on:
       - db
 
+  # todo: change for prod env file values should be passed to it.
   db:
-    image: postgres:15
+    image: postgres:16-alpine
     container_name: invoke_db
     environment:
-      POSTGRES_USER: symfony
-      POSTGRES_PASSWORD: secret
-      POSTGRES_DB: invoke
+      POSTGRES_DB: app
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: '!ChangeMe!'
+    healthcheck:
+      test: ["CMD", "pg_isready", "-d", "app", "-U", "app"]
+      timeout: 5s
+      retries: 5
+      start_period: 60s
     ports:
       - "5432:5432"
+    volumes:
+      - database_data:/var/lib/postgresql/data:rw
+
+volumes:
+  database_data:
