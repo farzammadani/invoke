@@ -1,6 +1,6 @@
 .PHONY: test-integration
 test-integration:
-	vendor/bin/codecept run integration
-#	vendor/bin/codecept run integration --group kiwi --debug
+	# using group: make test-integration GROUP=kiwi
+	vendor/bin/codecept run integration $(if $(GROUP),--group $(GROUP))
 
 
