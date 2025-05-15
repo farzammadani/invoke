@@ -73,6 +73,7 @@
         "codeception/module-asserts": "^3.2",
         "codeception/module-cli": "^2.0",
         "codeception/module-phpbrowser": "*",
-        "codeception/module-symfony": "^3.5"
+        "codeception/module-symfony": "^3.5",
+        "phpunit/phpunit": "^12.1"
     }
 }
