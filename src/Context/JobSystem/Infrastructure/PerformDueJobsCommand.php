@@ -8,7 +8,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-// make it work inside docker container for the call.
 #[AsCommand(
     name: 'app:perform-due',
     description: 'Evaluates due jobs from YAML and executes them'

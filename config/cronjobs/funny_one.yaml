@@ -1,5 +1,5 @@
 name: "Funny One"
-schedule: "51 10 * * *"
+schedule: "02 11 * * *"
 url: "http://localhost:9999"
 method: POST
 payload:
