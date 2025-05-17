@@ -1,0 +1,33 @@
+# Symfony & PHP
+/vendor
+/var
+/.env.local
+/.env.test.local
+/.env.*.backup
+
+# Composer
+composer.phar
+
+# Node.js (if using Webpack Encore or other front-end assets)
+/node_modules
+/build
+/public/build
+
+# Git
+.git
+.gitignore
+
+# IDE/editor config
+.idea
+.vscode
+*.swp
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Docker
+.dockerignore
+Dockerfile
+docker-compose.yml
+Makefile

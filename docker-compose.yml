@@ -9,11 +9,16 @@ services:
     working_dir: /var/www
     volumes:
       - .:/var/www
-    command: tail -f /dev/null
+    command: php -S 0.0.0.0:8000 -t public
     depends_on:
       - db
     ports:
       - "9999:9999"  # Allow stub server to be reached via localhost
+      - "8000:8000"
+    environment:
+      APP_ENV: dev
+      DATABASE_URL: postgresql://app:!ChangeMe!@db:5432/app?serverVersion=16&charset=utf8
+
 
   # todo: change for prod env file values should be passed to it.
   db:
